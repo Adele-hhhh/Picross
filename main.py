@@ -28,15 +28,21 @@ class Grille_de_jeux:
         self.master = master
 
         # Canvas
-        self.canvas = tk.Canvas(master, width=500, height=500, bg="black")
+        self.canvas = tk.Canvas(master, width=500, height=500, bg="white")
         self.canvas.place(x=200, y=100)
 
         # Valeur par défaut
         self.cases = 10
         self.taille_case = 500 // self.cases
 
+        #dict pour stocker l'état des cases
+        self.etats_cases = {} 
+
         # Dessin initial
         self.dessiner_grille()
+
+        # Lie le clic gauche à la fonction
+        self.canvas.bind("<Button-1>", self.clic_case)
 
     # --- FONCTION CLÉ ---
     def set_cases(self, nb_cases):
@@ -45,7 +51,7 @@ class Grille_de_jeux:
         pour changer le nombre de cases.
         """
         self.cases = nb_cases
-        self.taille_case = 650 // self.cases
+        self.taille_case = 500 // self.cases
 
         # Nettoyage du canvas
         self.canvas.delete("all")
@@ -61,10 +67,26 @@ class Grille_de_jeux:
                 x2 = x1 + self.taille_case
                 y2 = y1 + self.taille_case
 
-                self.canvas.create_rectangle(
+                rect = self.canvas.create_rectangle(
                     x1, y1, x2, y2,
-                    outline="gray"
+                    outline="grey", fill="white"
                 )
+                self.etats_cases[(col, lig)] = rect 
+
+    #Inverse la couleur de la case cliquée
+    def clic_case(self, event): 
+        #coordonnées de la case cliquée
+        col = event.x // self.taille_case 
+        lig = event.y // self.taille_case
+
+        if 0 <= col < self.cases and 0 <= lig < self.cases: #vérifie qu'on clique pas en dehors de la grille
+            rect = self.etats_cases[(col, lig)]
+            couleur_actuelle = self.canvas.itemcget(rect, "fill")
+            nouvelle_couleur = "black" if couleur_actuelle == "white" else "white"
+            self.canvas.itemconfig(rect, fill=nouvelle_couleur)
+
+
+
 
 # Point d’entrée du programme
 if __name__ == "__main__":
