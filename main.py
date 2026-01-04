@@ -1,15 +1,23 @@
+''''
+Picross 
+Auteurs : Matis Zheng et Adèle Havard
+Date : jsp
+Jeu dans une grille où on doit remplir ou non des cases 
+en respectant un nombre prédéfini par colonne et par ligne
+Entrées : les cases cochées par l'utilisateur
+Réslutat : indique si une errur est faite et annonce la victoire
+''''
 import tkinter as tk
 
-class FenetrePrincipale:
-    # Initialisation de la fenêtre principale
+class FenetrePrincipale:    # Initialisation de la fenêtre principale
     def __init__(self, master):
         self.master = master
 
         # Paramètres de la fenêtre
-        master.title("Picross")
-        master.geometry("900x900")
-        master.resizable(True, True) 
-        master.configure(bg="#FFFFFF")
+        master.title("Picross")    #titre de la fenêtre
+        master.geometry("900x900")    #taille de la fenêtre
+        master.resizable(True, True)     #autorise ou non le redimensionnage de la fenêtre
+        master.configure(bg="#FFFFFF")    #couleur du fond
 
         # Forcer la fenêtre au premier plan
         master.attributes('-topmost', True)
@@ -28,12 +36,12 @@ class Grille_de_jeux:
         self.master = master
 
         # Canvas
-        self.canvas = tk.Canvas(master, width=500, height=500, bg="white")
-        self.canvas.place(x=200, y=100)
+        self.canvas = tk.Canvas(master, width=500, height=500, bg="white")    #taille et couleur de la grille
+        self.canvas.place(x=200, y=100)    #écart entre le haut et le côté gauche de la fenêtre avec la grille
 
         # Valeur par défaut
-        self.cases = 10
-        self.taille_case = 500 // self.cases
+        self.cases = 10    #nombre de cases par côté
+        self.taille_case = 500 // self.cases    #calcule la taille d'une case
 
         #dict pour stocker l'état des cases
         self.etats_cases = {} 
@@ -42,22 +50,23 @@ class Grille_de_jeux:
         self.dessiner_grille()
 
         # Lie le clic gauche et le clic droit à leur fonction
-        self.canvas.bind("<Button-1>", self.clic_case)
+        self.canvas.bind("<Button-1>", self.clic_case_gauche)
         self.canvas.bind("<Button-3>", self.clic_case_droit)
+        
     # --- FONCTION CLÉ ---
     def set_cases(self, nb_cases):
         """
         Cette fonction sera appelée par un bouton
         pour changer le nombre de cases.
         """
-        self.cases = nb_cases
-        self.taille_case = 500 // self.cases
+        self.cases = nb_cases    #nombre de cases par côté
+        self.taille_case = 500 // self.cases    #calcule la taille d'une case
 
         # Nettoyage du canvas
-        self.canvas.delete("all")
+        self.canvas.delete("all") #enlève la grille qu'il y avait avant
 
         # Redessin
-        self.dessiner_grille()
+        self.dessiner_grille()    #remet une grille avec le nombre de cases demandé
 
     def dessiner_grille(self):
         for col in range(self.cases):
@@ -79,7 +88,7 @@ class Grille_de_jeux:
                 }
 
     #Inverse la couleur de la case cliquée
-    def clic_case(self, event): 
+    def clic_case_gauche(self, event): 
         #coordonnées de la case cliquée
         col = event.x // self.taille_case 
         lig = event.y // self.taille_case
