@@ -1,4 +1,4 @@
-''''
+'''
 Picross 
 Auteurs : Matis Zhang et Adèle Havard
 Date : jsp
@@ -6,8 +6,9 @@ Jeu dans une grille où on doit remplir ou non des cases
 en respectant un nombre prédéfini par colonne et par ligne
 Entrées : les cases cochées par l'utilisateur
 Réslutat : indique si une errur est faite et annonce la victoire
-''''
+'''
 import tkinter as tk
+import random
 
 class FenetrePrincipale:    # Initialisation de la fenêtre principale
     def __init__(self, master):
@@ -48,6 +49,10 @@ class Grille_de_jeux:
 
         # Dessin initial
         self.dessiner_grille()
+        self.liste_solution = self.creation_liste(self.cases)
+        self.afficher_liste()
+
+
 
         # Lie le clic gauche et le clic droit à leur fonction
         self.canvas.bind("<Button-1>", self.clic_case_gauche)
@@ -135,7 +140,20 @@ class Grille_de_jeux:
 
             case["croix"] = [l1, l2]
             case["etat"] = "croix"
+    
+    def creation_liste(self, nb_cases):
+        return [
+            [random.randint(0, 1) for _ in range(nb_cases)]
+            for _ in range(nb_cases)
+    ]
 
+    def afficher_liste(self):
+        for lig in range(self.cases):
+            for col in range(self.cases):
+                if self.liste_solution[lig][col] == 1:
+                    case = self.etats_cases[(col, lig)]
+                    self.canvas.itemconfig(case["rect"], fill="black")
+                    case["etat"] = "remplie"
 
 
 # Point d’entrée du programme
