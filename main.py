@@ -97,43 +97,29 @@ class Grille_de_jeux:
         #coordonnées de la case cliquée
         col = event.x // self.taille_case 
         lig = event.y // self.taille_case
+        
+        case = self.etats_cases[(col, lig)] 
+        
+        if case["croix"] == None:
+            self.canvas.itemconfig(case["rect"], fill="black") #on remplit la case
+            case["etat"] = "remplie" # on met à jour l'état de la case
 
-        if 0 <= col < self.cases and 0 <= lig < self.cases: #vérifie qu'on clique pas en dehors de la grille
-            case = self.etats_cases[(col, lig)]
-            rect = case["rect"]
-            couleur_actuelle = self.canvas.itemcget(rect, "fill")
-            nouvelle_couleur = "black" if couleur_actuelle == "white" else "white"
-            self.canvas.itemconfig(rect, fill=nouvelle_couleur)
-
-            # on met à jour l'état de la case
-            case["etat"] = "remplie" if nouvelle_couleur == "black" else "vide"
-
-            #si on remplit, on enlève une éventuelle croix
-            if case["croix"] is not None:
-                for ligne_id in case["croix"]:
-                    self.canvas.delete(ligne_id)
-                case["croix"] = None
 
     # Clic droit : mettre / enlever une croix
     def clic_case_droit(self, event):
         col = event.x // self.taille_case
         lig = event.y // self.taille_case
 
-        if 0 <= col < self.cases and 0 <= lig < self.cases:
-            case = self.etats_cases[(col, lig)]
+        case = self.etats_cases[(col, lig)]
 
-            # Si une croix existe déjà, on l’enlève
-            if case["croix"] is not None or case["etat"] is "remplie":
-                for ligne_id in case["croix"]:
-                    self.canvas.delete(ligne_id)
-                return
+        if case["etat"] == "vide":  # Si la case est déja remplie on met rien
 
-            # Sinon, on dessine une croix dans la case
+        #on dessine une croix dans la case :
             x1 = col * self.taille_case
             y1 = lig * self.taille_case
             x2 = x1 + self.taille_case
             y2 = y1 + self.taille_case
-
+            
             # deux lignes en diagonale
             l1 = self.canvas.create_line(x1+3, y1+3, x2-3, y2-3, fill="red", width=2)
             l2 = self.canvas.create_line(x1+3, y2-3, x2-3, y1+3, fill="red", width=2)
