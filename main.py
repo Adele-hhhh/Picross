@@ -5,9 +5,11 @@ Date : jsp
 Jeu dans une grille où on doit remplir ou non des cases 
 en respectant un nombre prédéfini par colonne et par ligne
 Entrées : les cases cochées par l'utilisateur
-Réslutat : indique si une errur est faite et annonce la victoire
+Réslutat : indique si une erreur est faite et annonce la victoire 
 '''
 import tkinter as tk
+from tkinter import messagebox 
+import random
 
 class FenetrePrincipale:    # Initialisation de la fenêtre principale
     def __init__(self, master):
@@ -18,10 +20,6 @@ class FenetrePrincipale:    # Initialisation de la fenêtre principale
         master.geometry("900x900")    #taille de la fenêtre
         master.resizable(True, True)     #autorise ou non le redimensionnage de la fenêtre
         master.configure(bg="#FFFFFF")    #couleur du fond
-
-        # Forcer la fenêtre au premier plan
-        master.attributes('-topmost', True)
-        master.after(100, lambda: master.attributes('-topmost', True))
 
         # Création de la grille de jeu
         self.grille = Grille_de_jeux(master)
@@ -34,6 +32,9 @@ class FenetrePrincipale:    # Initialisation de la fenêtre principale
 class Grille_de_jeux:
     def __init__(self, master):
         self.master = master
+
+        self.label_vies = tk.Label(master, text =f"Vies : {self.nb_vies}", bg="White", font=("Arial", 15)) #affiche le nombre de vies
+        self.label_vies.grid (row=0, column=0, padx=800, pady=50) #position du label
 
         # Canvas
         self.canvas = tk.Canvas(master, width=500, height=500, bg="white")    #taille et couleur de la grille
@@ -48,6 +49,8 @@ class Grille_de_jeux:
 
         # Dessin initial
         self.dessiner_grille()
+        self.liste_solution = self.creation_liste(self.cases)
+        #self.afficher_liste()
 
         # Lie le clic gauche et le clic droit à leur fonction
         self.canvas.bind("<Button-1>", self.clic_case_gauche)
@@ -83,48 +86,63 @@ class Grille_de_jeux:
                 #on stocke l'ID de la case (vide et sans croix)
                 self.etats_cases[(col, lig)] = {
                     "rect": rect,
-                    "croix": None, 
-                    "etat": "vide"
-                }
+                    "etat": 0   }
+
+    nb_vies = 3 #nombre de vies initial
 
     #Inverse la couleur de la case cliquée
     def clic_case_gauche(self, event): 
         #coordonnées de la case cliquée
         col = event.x // self.taille_case 
         lig = event.y // self.taille_case
-        
-        case = self.etats_cases[(col, lig)] 
-        
-        if case["croix"] == None:
-            self.canvas.itemconfig(case["rect"], fill="black") #on remplit la case
-            case["etat"] = "remplie" # on met à jour l'état de la case
 
+        case = self.etats_cases[(col, lig)] 
+
+        if case["etat"] == 0:   #si la case est vide 
+            if self.liste_solution[col][lig] == 1 and self.nb_vies > 0:#si c'est la bonne réponse et qu'on a encore des vies
+                self.canvas.itemconfig(case["rect"], fill="black") #on remplit la case
+                case["etat"] = 1 # on met à jour l'état de la case
+            else : 
+                if self.nb_vies >= 1 : #si on a encore des vies on en enlève une
+                    self.nb_vies -= 1 
+                    self.label_vies.config(text=f"Vies : {self.nb_vies}") #on change le nombre affiché
+                    if self.nb_vies == 0 :  # si on a plus de vies on perd
+                        messagebox.showinfo(None, "Vous avez perdu")
+                        messagebox.OK = 'ok'
+                    
 
     # Clic droit : mettre / enlever une croix
     def clic_case_droit(self, event):
-        col = event.x // self.taille_case
+        col = event.x // self.taille_case 
         lig = event.y // self.taille_case
 
         case = self.etats_cases[(col, lig)]
 
-        if case["etat"] == "vide":  # Si la case est déja remplie on met rien
-
-        #on dessine une croix dans la case :
-            x1 = col * self.taille_case
-            y1 = lig * self.taille_case
-            x2 = x1 + self.taille_case
-            y2 = y1 + self.taille_case
+        if case["etat"] == 0:  # Si la case est déja remplie on met rien
+            if self.liste_solution[col][lig] == 0 and self.nb_vies > 0 :#si c'est la bonne réponse et qu'on a encore des vies
+                #on dessine une croix dans la case :
+                x1 = col * self.taille_case
+                y1 = lig * self.taille_case
+                x2 = x1 + self.taille_case
+                y2 = y1 + self.taille_case
             
-            # deux lignes en diagonale
-            l1 = self.canvas.create_line(x1+3, y1+3, x2-3, y2-3, fill="red", width=2)
-            l2 = self.canvas.create_line(x1+3, y2-3, x2-3, y1+3, fill="red", width=2)
+                # deux lignes en diagonale
+                l1 = self.canvas.create_line(x1+3, y1+3, x2-3, y2-3, fill="red", width=2)
+                l2 = self.canvas.create_line(x1+3, y2-3, x2-3, y1+3, fill="red", width=2)
+                case["etat"] = 1
+            else : 
+                if self.nb_vies >= 1 : #si on a encore des vies on en enlève une
+                    self.nb_vies -= 1 
+                    self.label_vies.config(text=f"Vies : {self.nb_vies}") #on change le nombre affiché
+                    if self.nb_vies == 0 :  #si on a plus de vies on perd
+                        messagebox.showinfo(None, "Vous avez perdu")
+                        messagebox.OK = 'ok'
 
-            case["croix"] = [l1, l2]
-            case["etat"] = "croix"
-
-
+    def creation_liste(self, nb_cases):
+        return [[random.randint(0, 1) for _ in range(nb_cases)]
+                for _ in range(nb_cases)]
 
 # Point d’entrée du programme
 if __name__ == "__main__":
     app = FenetrePrincipale(tk.Tk())
-    app.run()
+    app.run() 
