@@ -1,0 +1,38 @@
+'''
+Nombres grille 
+'''
+import mainn as mn 
+
+def nombre_colonne(liste_solution) :
+    liste = []
+    for i in range (len(liste_solution)):
+        l = []
+        k = 0
+        for j in range (len(liste_solution)) :
+            if liste_solution[j][i] == 1 : 
+                k += 1
+            elif k > 0: 
+                l.append(k)
+                k = 0
+        if k > 0 : 
+            l.append(k)
+        liste.append(l)
+    return liste
+
+def nombre_ligne(liste_solution) :
+    liste = []
+    for i in liste_solution: 
+        l = []
+        k = 0
+        for j in range (len(i)):
+            if i[j] == 1 :
+                k += 1 
+            elif k != 0: 
+                l.append(k)
+                k = 0
+            
+            if j == len(i) - 1 and i[j] != 0 : 
+                    l.append(k)
+                    k = 0 
+        liste.append(l)
+    return liste
