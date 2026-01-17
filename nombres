@@ -1,8 +1,8 @@
 '''
-Nombres grille 
+à partir de la liste de solutions, donne le nombre de cases à remplir par colonne et par ligne
 '''
-import mainn as mn 
 
+#par colonne
 def nombre_colonne(liste_solution) :
     liste = []
     for i in range (len(liste_solution)):
@@ -19,6 +19,8 @@ def nombre_colonne(liste_solution) :
         liste.append(l)
     return liste
 
+
+#par ligne
 def nombre_ligne(liste_solution) :
     liste = []
     for i in liste_solution: 
