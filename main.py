@@ -71,7 +71,7 @@ class interface :
 
         creation = tk.Button(
             master,
-            text="Crée un niveau", 
+            text="Créer un niveau", 
             font=("Arial", 14),
             command=cf.cree_nv,
             )
