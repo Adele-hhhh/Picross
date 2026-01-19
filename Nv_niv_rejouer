@@ -1,0 +1,45 @@
+import NOMBRES as nb 
+import Victoire_solution as vs 
+
+def rejouer(self): 
+    #nouvelles vies
+    self.nb_vies = 3
+    self.label_vies.config(text=f"Vies : {self.nb_vies}")#actualise l'affichage du nombre de vies
+
+    #--on enlève les cases qui ont été coloriées--
+
+    self.cases = self.nb_cases_cote.get() #on récupère le nombre de cases par côté dans le scale
+    self.taille_case = 500 // self.cases #calcule la taille d'une case
+
+    # Nettoyage du canvas
+    self.canvas.delete("all") #enlève la grille qu'il y avait avant
+    self.etats_cases.clear() #toutes les cases sont remises à 0
+        
+    # Redessin
+    self.dessiner_grille()    #remet une grille avec le nombre de cases demandé
+
+
+def nouveau_niveau(self):
+    """
+    Crée un nouveau niveau avec le nombre de cases demandé dans le Scale
+    """
+    self.cases = self.nb_cases_cote.get()#on récupère le nombre de cases par côté dans le scale
+    self.taille_case = 500 // self.cases    #calcule la taille d'une case
+
+    #nouvelle solution 
+    self.liste_solution = vs.creation_liste(self) #on crée une nouvelle solution
+
+    #nouvelles vies
+    self.nb_vies = 3
+    self.label_vies.config(text=f"Vies : {self.nb_vies}")#actualise l'affichage du nombre de vies
+        
+    # Nettoyage du canvas
+    self.canvas.delete("all") #enlève la grille qu'il y avait avant
+    self.etats_cases.clear() #toutes les cases sont remises à 0
+        
+    # Redessin
+    self.dessiner_grille()    #remet une grille avec le nombre de cases demandé
+
+    #on affiche les nouveaux indices : 
+    nb.afficher_nb_col(self)  
+    nb.afficher_nb_lig(self)
