@@ -7,11 +7,11 @@ en respectant un nombre prédéfini par colonne et par ligne
 Entrées : les cases cochées par l'utilisateur
 Réslutat : indique si une erreur est faite et annonce la victoire 
 '''
-import tkinter as tk
-from tkinter import messagebox 
+import tkinter as tk #import de tkinter
+#--import des fonctions des fichiers annexes--
 import NOMBRES as nb 
-import CLICS as cl
-import création_fichier as cf  # Import du fichier de création de fichier
+import CLICS as cl 
+import création_fichier as cf
 import Utillisation_fichier as uf 
 import Victoire_solution as vs 
 import Nv_niv_rejouer as nv 
