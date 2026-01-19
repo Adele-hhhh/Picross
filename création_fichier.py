@@ -26,7 +26,7 @@ class CreationInterface(mn.interface):
             font=("Arial", 14),
             command=self.sauvegarder_grille
         )
-        self.save_button.place(x=650, y=300)
+        self.save_button.place(x=620, y=380)
 
     def toggle_case(self, event):
         """Toggle l'état d'une case (0 -> 1 ou 1 -> 0)"""
@@ -69,9 +69,8 @@ class CreationInterface(mn.interface):
         else:
             messagebox.showinfo("Annulé", "Sauvegarde annulée.")
 
-def cree_nv(self):
+def cree_nv():
     """Fonction principale pour créer un nouveau niveau"""
-    self.master.destroy()  # Ferme la fenêtre principale
     root = tk.Tk()
     app = CreationInterface(root)
     root.mainloop()
