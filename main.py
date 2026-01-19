@@ -9,10 +9,11 @@ Réslutat : indique si une erreur est faite et annonce la victoire
 '''
 import tkinter as tk
 from tkinter import messagebox 
-import random
-import NOMBRES as nb  # Import du fichier pour le calcul des nombres de cases à remplir 
+import NOMBRES as nb 
 import création_fichier as cf  # Import du fichier de création de fichier
-import Utillisation_fichier as uf
+import Utillisation_fichier as uf 
+import Victoire_solution as vs 
+import Nv_niv_rejouer as nv 
 
 class FenetrePrincipale:    # Initialisation de la fenêtre principale
     def __init__(self, master):
@@ -39,117 +40,84 @@ class interface :
 
         #affichage du nombre de vies
         self.label_vies = tk.Label(
-            master, 
-            text =f"Vies : {self.nb_vies}", 
-            bg="Violet red", 
-            font=("Arial", 15))
+            master, #nom de la fenêtre
+            text =f"Vies : {self.nb_vies}", #texte du label(avec nombre de vies)
+            bg="Violet red", #couleur du label
+            font=("Arial", 15)) #police et taille de l'écriture
         self.label_vies.place(x=650, y=30) #position du label 
-
-        #titre du scale
-        self.cases_cote = tk.Label (
-            master, 
-            text="Nombre de cases par côté", 
-            bg="Light goldenrod", 
-            font=("Arial",10))
-        self.cases_cote.place(x=620, y=100) 
 
         #pour changer le nombre de cases par côté
         self.nb_cases_cote = tk.Scale(
-            master, 
-            orient=tk.HORIZONTAL, 
-            from_=5, to=10, 
-            bg="Light goldenrod")
-        self.nb_cases_cote.set(10) 
-        self.nb_cases_cote.place(x=650, y=120)
+            master, #nom de la fenêtre
+            orient=tk.HORIZONTAL, #orientation du scale 
+            from_=5, to=10, #variables entre lesquelles va le scale
+            bg="Light goldenrod") #couleur du scale
+        self.nb_cases_cote.set(10) #valeur initiale 
+        self.nb_cases_cote.place(x=650, y=120) #position du scale
+        
+        #titre du scale
+        self.cases_cote = tk.Label (
+            master, #nom de la fenêtre
+            text="Nombre de cases par côté", #texte du label
+            bg="Light goldenrod",#couleur du label
+            font=("Arial",10)) #police et taille de l'écriture 
+        self.cases_cote.place(x=620, y=100) #position du label
     
+        #créer un nouveau niveau
         nv_niv = tk.Button(
-            master,
-            text="Nouveau niveau", 
-            font=("Arial", 14), 
-            command=self.nouveau_niveau)
-        nv_niv.place(x=620, y=200)
+            master, #nom de la fenêtre
+            text="Nouveau niveau", #titre du bouton
+            font=("Arial", 14), #police et taille de l'écriture 
+            command=nv.nouveau_niveau) #associe le bouton et la fonction qui lui correspond
+        nv_niv.place(x=620, y=200) #position du bouton
+
+        #rejouer à la partie précédente
+        rejouer = tk.Button(
+                master, #nom de la fenêtre
+                text="Rejouer", #titre du bouton
+                font=("Arial", 14), #police et taille de l'écriture 
+                command=nv.rejouer) #associe le bouton et la fonction qui lui correspond
+        rejouer.place(x=620, y=270) #position du bouton
 
         creation = tk.Button(
-            master,
-            text="Créer un niveau", 
-            font=("Arial", 14),
-            command=cf.cree_nv,
-            )
-        creation.place(x=620, y=300)
+            master,#nom de la fenêtre
+            text="Créer un niveau", #titre du bouton
+            font=("Arial", 14),#police et taille de l'écriture 
+            command=cf.cree_nv,)#associe le bouton et la fonction qui lui correspond
+        creation.place(x=620, y=380)#position du bouton
 
         fichiers = tk.Button(
-            master,
-            text="Fichiers niveaux", 
-            font=("Arial", 14),
-            command=uf.utilise_fichiers
-            )
-        fichiers.place(x=620, y=400)
+            master,#nom de la fenêtre
+            text="Fichiers niveaux", #titre du bouton
+            font=("Arial", 14),#police et taille de l'écriture 
+            command=uf.utilise_fichiers)#associe le bouton et la fonction qui lui correspond
+        fichiers.place(x=620, y=460)#position du bouton
 
-        # Grille
+        # creation grille
         self.canvas = tk.Canvas(
-            master, 
+            master, #nom de la fenêtre
             width=500, height=500, #taille de la grille
             bg="white")    #couleur de la grille
-        self.canvas.place(x=100, y=70)    #écart entre le haut et le côté gauche de la fenêtre avec la grille
+        self.canvas.place(x=100, y=100)  #position de la grille
         
-        # Valeur par défaut
-        self.cases = 10    #nombre de cases par côté
+        # Valeurs par défaut
+        self.cases = 10    #nombre de cases par côté (au début quand le scale est à 10) 
         self.taille_case = 500 // self.cases    #calcule la taille d'une case
 
         #dict pour stocker l'état des cases
         self.etats_cases = {} 
 
-        #solution
-        self.liste_solution = self.creation_liste(self.cases)
+        #solution d'une partie :
+        self.liste_solution = vs.creation_liste(self)
         
         # Dessin initial
         self.dessiner_grille()
         nb.afficher_nb_col(self) 
         nb.afficher_nb_lig(self)
-        self.liste_solution = self.creation_liste(self.cases)
-
-
 
         # Lie le clic gauche et le clic droit à leur fonction
         self.canvas.bind("<Button-1>", self.clic_case_gauche)
         self.canvas.bind("<Button-3>", self.clic_case_droit)
-        
-    def verifier_victoire(self):
-        """Vérifie si toutes les cases correspondent à la solution"""
-        for (col, lig), case in self.etats_cases.items():
-            solution = self.liste_solution[lig][col]
-            if case["etat"] == solution:
-                continue 
-            else : 
-                return False
-        return True
-
-    
-    def creation_liste(self, nb_cases):
-            return [[random.randint(0, 1) for _ in range(nb_cases)]
-                for _ in range(nb_cases)]
-    def nouveau_niveau(self):
-        """
-        Crée un nouveau niveau avec le nombre de cases demandé dans le Scale
-        """
-        self.cases = self.nb_cases_cote.get()
-        self.taille_case = 500 // self.cases    #calcule la taille d'une case
-
-        #nouvelle solution 
-        self.liste_solution = self.creation_liste(self.cases)
-
-        #nouvelles vies
-        self.nb_vies = 3
-        self.label_vies.config(text=f"Vies : {self.nb_vies}")
-        
-        # Nettoyage du canvas
-        self.canvas.delete("all") #enlève la grille qu'il y avait avant
-        self.etats_cases.clear() #toutes les cases sont remises à 0
-        
-        # Redessin
-        self.dessiner_grille()    #remet une grille avec le nombre de cases demandé
-        nb.afficher_nb_col(self) 
-        nb.afficher_nb_lig(self)
 
     def dessiner_grille(self):
         for col in range(self.cases):
@@ -175,12 +143,12 @@ class interface :
         lig = event.y // self.taille_case
         
         case = self.etats_cases[(col, lig)] 
-        if self.verifier_victoire() == False:
+        if vs.verifier_victoire(self) == False:
             if case["etat"] == 0:   #si la case est vide 
                 if self.liste_solution[lig][col] == 1 and self.nb_vies > 0:#si c'est la bonne réponse et qu'on a encore des vies
                     self.canvas.itemconfig(case["rect"], fill="black") #on remplit la case
                     case["etat"] = 1 # on met à jour l'état de la case
-                    if self.verifier_victoire():
+                    if vs.verifier_victoire(self):
                         messagebox.showinfo(None, "Vous avez gagnééé !")
                         return
                 else : 
@@ -198,7 +166,7 @@ class interface :
 
         case = self.etats_cases[(col, lig)]
         
-        if self.verifier_victoire() == False:
+        if vs.verifier_victoire(self) == False:
             if case["etat"] == 0:  # Si la case est déja remplie on met rien
                 if self.liste_solution[lig][col] == 0 and self.nb_vies > 0 :#si c'est la bonne réponse et qu'on a encore des vies
                     #on dessine une croix dans la case :
@@ -211,7 +179,7 @@ class interface :
                     l1 = self.canvas.create_line(x1+3, y1+3, x2-3, y2-3, fill="Violet red", width=2)
                     l2 = self.canvas.create_line(x1+3, y2-3, x2-3, y1+3, fill="Violet red", width=2)
                     case["etat"] = 0
-                    if self.verifier_victoire():
+                    if vs.verifier_victoire(self):
                         messagebox.showinfo(None, "Vous avez gagnééé !")
                         return
                 else : 
