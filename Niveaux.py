@@ -1,7 +1,7 @@
 import random 
 import NOMBRES as nb 
 
-#crée une liste de 0 et 1 aléatoire, les 1 représeteront les cases remplies et les 0 les cases vides
+#crée une liste de 0 et 1 aléatoire, les 1 représenteront les cases remplies et les 0 les cases vides
 def creation_liste(self):
     return [[random.randint(0, 1) for _ in range(self.cases)]
         for _ in range(self.cases)]
@@ -47,3 +47,4 @@ def nouveau_niveau(self):
     #on affiche les nouveaux indices : 
     nb.afficher_nb_col(self)
     nb.afficher_nb_lig(self)
+
