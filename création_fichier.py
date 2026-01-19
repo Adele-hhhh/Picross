@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-import main as nm  # Import du fichier principal (assumé comme main.py contenant les classes FenetrePrincipale et interface)
+import main as mn  # Import du fichier principal (assumé comme main.py contenant les classes FenetrePrincipale et interface)
 import json  # Pour sauvegarder la liste dans un fichier JSON
 
 
-class CreationInterface(nm.interface):
+class CreationInterface(mn.interface):
     def __init__(self, master):
         self.master = master
 
@@ -69,8 +69,9 @@ class CreationInterface(nm.interface):
         else:
             messagebox.showinfo("Annulé", "Sauvegarde annulée.")
 
-def cree_nv():
+def cree_nv(self):
     """Fonction principale pour créer un nouveau niveau"""
+    self.master.destroy()  # Ferme la fenêtre principale
     root = tk.Tk()
     app = CreationInterface(root)
     root.mainloop()
