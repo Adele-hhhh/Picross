@@ -26,7 +26,7 @@ class CreationInterface(mn.interface):
             font=("Arial", 14),
             command=self.sauvegarder_grille
         )
-        self.save_button.place(x=720, y=300)
+        self.save_button.place(x=620, y=300)
 
     def toggle_case(self, event):
         """Toggle l'état d'une case (0 -> 1 ou 1 -> 0)"""
