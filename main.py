@@ -10,7 +10,7 @@ Réslutat : indique si une erreur est faite et annonce la victoire
 import tkinter as tk
 from tkinter import messagebox 
 import random
-import NOMBRES as nb 
+import NOMBRES as nb  # Import du fichier pour le calcul des nombres de cases à remplir 
 import création_fichier as cf  # Import du fichier de création de fichier
 import Utillisation_fichier as uf
 
