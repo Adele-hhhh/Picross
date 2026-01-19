@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-
+import main as nm  # Import du fichier principal (assumé comme main.py contenant les classes FenetrePrincipale et interface)
 import json  # Pour sauvegarder la liste dans un fichier JSON
-import main as mn  # Import du fichier principal (assumé comme main.py contenant les classes FenetrePrincipale et interface)
 
-class CreationInterface(mn.interface):
+
+class CreationInterface(nm.interface):
     def __init__(self, master):
         self.master = master
 

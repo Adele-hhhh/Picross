@@ -21,7 +21,7 @@ class FenetrePrincipale:    # Initialisation de la fenêtre principale
 
         # Paramètres de la fenêtre
         master.title("Picross")    #titre de la fenêtre
-        master.geometry("800x900")    #taille de la fenêtre
+        master.geometry("800x650")    #taille de la fenêtre
         master.resizable(True, True)     #autorise ou non le redimensionnage de la fenêtre
         master.configure(bg="#FFFFFF")    #couleur du fond
 
@@ -39,7 +39,7 @@ class interface :
         self.nb_vies = 3 #nombre de vies initial
 
         #affichage du nombre de vies
-        self.label_vies = tk.Label(
+        self.label_vies = tk.Label( 
             master, #nom de la fenêtre
             text =f"Vies : {self.nb_vies}", #texte du label(avec nombre de vies)
             bg="Violet red", #couleur du label
@@ -77,21 +77,21 @@ class interface :
                 text="Rejouer", #titre du bouton
                 font=("Arial", 14), #police et taille de l'écriture 
                 command=nv.rejouer) #associe le bouton et la fonction qui lui correspond
-        rejouer.place(x=620, y=270) #position du bouton
+        rejouer.place(x=620, y=250) #position du bouton
 
         creation = tk.Button(
             master,#nom de la fenêtre
             text="Créer un niveau", #titre du bouton
             font=("Arial", 14),#police et taille de l'écriture 
             command=cf.cree_nv,)#associe le bouton et la fonction qui lui correspond
-        creation.place(x=620, y=380)#position du bouton
+        creation.place(x=620, y=300)#position du bouton
 
         fichiers = tk.Button(
             master,#nom de la fenêtre
             text="Fichiers niveaux", #titre du bouton
             font=("Arial", 14),#police et taille de l'écriture 
             command=uf.utilise_fichiers)#associe le bouton et la fonction qui lui correspond
-        fichiers.place(x=620, y=460)#position du bouton
+        fichiers.place(x=620, y=350)#position du bouton
 
         # creation grille
         self.canvas = tk.Canvas(
