@@ -10,7 +10,7 @@ class CreationInterface(mn.interface):
 
         # Paramètres de la fenêtre
         master.title("Picross niveau création")    #titre de la fenêtre
-        master.geometry("900x900")    #taille de la fenêtre
+        master.geometry("800x900")    #taille de la fenêtre
         master.resizable(True, True)     #autorise ou non le redimensionnage de la fenêtre
         master.configure(bg="#FFFFFF")    #couleur du fond
 
@@ -26,7 +26,7 @@ class CreationInterface(mn.interface):
             font=("Arial", 14),
             command=self.sauvegarder_grille
         )
-        self.save_button.place(x=620, y=300)
+        self.save_button.place(x=650, y=300)
 
     def toggle_case(self, event):
         """Toggle l'état d'une case (0 -> 1 ou 1 -> 0)"""
