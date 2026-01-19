@@ -13,8 +13,7 @@ import NOMBRES as nb
 import CLICS as cl 
 import création_fichier as cf
 import Utillisation_fichier as uf 
-import Victoire_solution as vs 
-import Nv_niv_rejouer as nv 
+import Niveaux as niv
 
 class FenetrePrincipale:    # Initialisation de la fenêtre principale
     def __init__(self, master):
@@ -69,7 +68,7 @@ class interface :
             master, #nom de la fenêtre
             text="Nouveau niveau", #titre du bouton
             font=("Arial", 14), #police et taille de l'écriture 
-            command=lambda: nv.nouveau_niveau(self)) #associe le bouton et la fonction qui lui correspond
+            command=lambda: niv.nouveau_niveau(self)) #associe le bouton et la fonction qui lui correspond
         nv_niv.place(x=620, y=200) #position du bouton
 
         #rejouer à la partie précédente
@@ -77,7 +76,7 @@ class interface :
                 master, #nom de la fenêtre
                 text="Rejouer", #titre du bouton
                 font=("Arial", 14), #police et taille de l'écriture 
-                command=lambda: nv.rejouer(self)) #associe le bouton et la fonction qui lui correspond
+                command=lambda: niv.rejouer(self)) #associe le bouton et la fonction qui lui correspond
         rejouer.place(x=620, y=270) #position du bouton
 
         creation = tk.Button(
@@ -109,7 +108,7 @@ class interface :
         self.etats_cases = {} 
 
         #solution d'une partie :
-        self.liste_solution = vs.creation_liste(self)
+        self.liste_solution = niv.creation_liste(self)
         
         # Dessin initial
         self.dessiner_grille() 
