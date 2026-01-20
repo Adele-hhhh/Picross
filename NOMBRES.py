@@ -53,14 +53,16 @@ def afficher_nb_col(self):
                 texte = str(nombre)
             else:
                 texte = texte + "\n" + str(nombre)
-        label = tk.Label(
+        #on crée des labels pour afficher les nombres
+        label = tk.Label( 
                 self.master, 
                 text = texte,
                 bg="Light goldenrod", 
                 font=("Arial", 9))
         x = 100 + i * self.taille_case + self.taille_case//2
         label.place(x=x, y=60, anchor="center")
-        self.labels_indices.append(label)
+
+        self.labels_indices.append(label) # on met les labels dans une liste pour pouvoir les supprimer après
 
 def afficher_nb_lig(self):
     nb_lig = nombre_ligne(self.liste_solution)
@@ -75,6 +77,7 @@ def afficher_nb_lig(self):
                 texte = str(nombre)
             else:
                 texte = texte + " " + str(nombre)
+        #on crée des labels pour afficher les nombres
         label = tk.Label(
                 self.master, 
                 text = texte,                    
@@ -82,4 +85,4 @@ def afficher_nb_lig(self):
                 font=("Arial", 9))
         y = 100 + i * self.taille_case + self.taille_case//2
         label.place(x=73, y=y, anchor="center")
-        self.labels_indices.append(label)
+        self.labels_indices.append(label)# on met les labels dans une liste pour pouvoir les supprimer après
