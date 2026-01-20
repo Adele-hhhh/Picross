@@ -24,6 +24,9 @@ def rejouer(self):
     
     # Redessin
     self.dessiner_grille()    #remet une grille avec le nombre de cases demandé
+    # Réaffichage des indices
+    nb.afficher_nb_col(self)
+    nb.afficher_nb_lig(self)
 
 #Crée un nouveau niveau avec le nombre de cases demandé dans le Scale
 def nouveau_niveau(self):

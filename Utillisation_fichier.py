@@ -23,11 +23,18 @@ class Utilisation_fichier(Interface):
         self.master = master
 
         # Paramètres de la fenêtre
-        master.title("Picross")  # Titre de la fenêtre
+        master.title("Picross Fichier")  # Titre de la fenêtre
         master.geometry("850x700")  # Taille de la fenêtre
         master.resizable(True, True)  # Autorise le redimensionnage
         master.configure(bg="#FFFFFF")  # Couleur du fond
         master.attributes('-topmost', True)  # Fenêtre toujours au premier plan
+        # Bouton pour charger un niveau depuis un fichier
+        fichiers = tk.Button(
+        master,  # Fenêtre parente
+        text="Fichiers niveaux",  # Titre du bouton
+        font=("Arial", 14),  # Police et taille de l'écriture
+        command=lambda: [master.destroy(), utilise_fichiers()])  # Fonction appelée au clic
+        fichiers.place(x=620, y=440)  # Position du bouton
 
         # Configuration AVANT l'appel à super().__init__
         # On définit la liste_solution et les dimensions avant d'initialiser l'interface
