@@ -7,7 +7,7 @@ from tkinter import messagebox, simpledialog
 from interface_base import Interface  # Import de la classe de base Interface
 import json  # Pour sauvegarder la grille dans un fichier JSON
 import NOMBRES as nb  # Pour afficher les indices en temps réel
-
+import Niveaux as niv  # Pour la fonction de rejouer
 
 class CreationInterface(Interface):
     '''Interface de création de niveau, hérite de la classe Interface de base'''
@@ -18,7 +18,7 @@ class CreationInterface(Interface):
 
         # Paramètres de la fenêtre
         master.title("Picross niveau création")  # Titre de la fenêtre
-        master.geometry("900x800")  # Taille de la fenêtre
+        master.geometry("850x700")  # Taille de la fenêtre
         master.resizable(False, False)  # Désactive le redimensionnage
         master.configure(bg="#FFFFFF")  # Couleur du fond
 
@@ -53,7 +53,15 @@ class CreationInterface(Interface):
             text="Sauvegarder la grille",  # Titre du bouton
             font=("Arial", 14),  # Police et taille
             command=self.sauvegarder_grille)  # Fonction de sauvegarde
-        self.save_button.place(x=620, y=380)  # Position du bouton
+        self.save_button.place(x=620, y=300)  # Position du bouton
+                # Bouton pour rejouer à la partie précédente
+        
+        self.rejouer_btn = tk.Button(  
+            master,  # Fenêtre parente
+            text="Reinitialiser",  # Titre du bouton
+            font=("Arial", 14),  # Police et taille de l'écriture 
+            command=lambda: niv.rejouer(self))  # Fonction appelée au clic
+        self.rejouer_btn.place(x=620, y=250)  # Position du bouton
 
     def actualiser_indices(self):
         '''Supprime et réaffiche les indices en temps réel'''
@@ -63,64 +71,8 @@ class CreationInterface(Interface):
         self.labels_indices.clear()
         
         # Réaffichage des indices mis à jour
-        self.afficher_nb_col_creation()
-        self.afficher_nb_lig_creation()
-
-    def afficher_nb_col_creation(self):
-        '''Affiche les indices des colonnes (version pour création)'''
-        nb_col = nb.nombre_colonne(self.liste_solution)
-        
-        # Fond coloré pour les indices des colonnes
-        fond = tk.Label(self.master, bg="Light goldenrod", height=5, width=71)
-        fond.place(x=100, y=20)
-        self.labels_indices.append(fond)
-        
-        # Pour chaque colonne, affiche les nombres verticalement
-        for i in range(len(nb_col)): 
-            texte = ""
-            for nombre in nb_col[i]:
-                if texte == "":
-                    texte = str(nombre)
-                else:
-                    texte = texte + "\n" + str(nombre)
-            
-            # Affichage du label avec les nombres
-            label = tk.Label(
-                self.master, 
-                text=texte,
-                bg="Light goldenrod", 
-                font=("Arial", 9))
-            x = 100 + i * self.taille_case + self.taille_case // 2
-            label.place(x=x, y=60, anchor="center")
-            self.labels_indices.append(label)
-
-    def afficher_nb_lig_creation(self):
-        '''Affiche les indices des lignes (version pour création)'''
-        nb_lig = nb.nombre_ligne(self.liste_solution)
-        
-        # Fond coloré pour les indices des lignes
-        fond = tk.Label(self.master, bg="Light goldenrod", height=33, width=7)
-        fond.place(x=46, y=100)
-        self.labels_indices.append(fond)
-        
-        # Pour chaque ligne, affiche les nombres horizontalement
-        for i in range(len(nb_lig)): 
-            texte = ""
-            for nombre in nb_lig[i]:
-                if texte == "":
-                    texte = str(nombre)
-                else:
-                    texte = texte + " " + str(nombre)
-            
-            # Affichage du label avec les nombres
-            label = tk.Label(
-                self.master, 
-                text=texte,                    
-                bg="Light goldenrod", 
-                font=("Arial", 9))
-            y = 100 + i * self.taille_case + self.taille_case // 2
-            label.place(x=73, y=y, anchor="center")
-            self.labels_indices.append(label)
+        nb.afficher_nb_col(self) 
+        nb.afficher_nb_lig(self)
 
     def start_drag(self, event):
         '''
@@ -225,6 +177,7 @@ class CreationInterface(Interface):
 def cree_nv():
     '''Fonction principale pour lancer l'interface de création de niveau'''
     root = tk.Tk()
+    root.attributes('-topmost', True)
     app = CreationInterface(root)
     root.mainloop()
 
