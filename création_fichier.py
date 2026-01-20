@@ -7,7 +7,7 @@ from tkinter import messagebox, simpledialog
 from interface_base import Interface  # Import de la classe de base Interface
 import json  # Pour sauvegarder la grille dans un fichier JSON
 import NOMBRES as nb  # Pour afficher les indices en temps réel
-
+import Niveaux as niv  # Pour la fonction de rejouer
 
 class CreationInterface:
     '''Interface de création de niveau avec affichage des indices en temps réel'''
