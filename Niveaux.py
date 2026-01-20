@@ -1,5 +1,6 @@
 import random 
 import NOMBRES as nb 
+import création_fichier as cf
 
 #crée une liste de 0 et 1 aléatoire, les 1 représenteront les cases remplies et les 0 les cases vides
 def creation_liste(self):
@@ -40,11 +41,11 @@ def nouveau_niveau(self):
     # Nettoyage du canvas
     self.canvas.delete("all") #enlève la grille qu'il y avait avant
     self.etats_cases.clear() #toutes les cases sont remises à 0
-        
+
+    cf.actualiser_indices(self) #enlève les anciens indices et met les nouveaux  
+    
     # Redessin
     self.dessiner_grille()    #remet une grille avec le nombre de cases demandé
 
-    #on affiche les nouveaux indices : 
-    nb.afficher_nb_col(self)
-    nb.afficher_nb_lig(self)
+
 
