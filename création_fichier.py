@@ -18,7 +18,7 @@ class CreationInterface(Interface):
 
         # Paramètres de la fenêtre
         master.title("Picross niveau création")  # Titre de la fenêtre
-        master.geometry("900x800")  # Taille de la fenêtre
+        master.geometry("850x700")  # Taille de la fenêtre
         master.resizable(False, False)  # Désactive le redimensionnage
         master.configure(bg="#FFFFFF")  # Couleur du fond
 
@@ -53,7 +53,7 @@ class CreationInterface(Interface):
             text="Sauvegarder la grille",  # Titre du bouton
             font=("Arial", 14),  # Police et taille
             command=self.sauvegarder_grille)  # Fonction de sauvegarde
-        self.save_button.place(x=620, y=380)  # Position du bouton
+        self.save_button.place(x=620, y=300)  # Position du bouton
 
     def actualiser_indices(self):
         '''Supprime et réaffiche les indices en temps réel'''
@@ -225,6 +225,7 @@ class CreationInterface(Interface):
 def cree_nv():
     '''Fonction principale pour lancer l'interface de création de niveau'''
     root = tk.Tk()
+    root.attributes('-topmost', True)
     app = CreationInterface(root)
     root.mainloop()
 

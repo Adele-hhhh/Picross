@@ -3,6 +3,7 @@ Classe de base Interface pour le jeu Picross
 Contient la grille de jeu, les contrôles et l'affichage des indices
 '''
 import tkinter as tk
+from tkinter import messagebox
 import NOMBRES as nb 
 import CLICS as cl 
 import Niveaux as niv
@@ -41,20 +42,20 @@ class Interface:
         self.cases_cote.place(x=620, y=100)  # Position du label
     
         # Bouton pour créer un nouveau niveau
-        nv_niv = tk.Button(
+        self.nv_niv = tk.Button(  
             master,  # Fenêtre parente
             text="Nouveau niveau",  # Titre du bouton
             font=("Arial", 14),  # Police et taille de l'écriture 
             command=lambda: niv.nouveau_niveau(self))  # Fonction appelée au clic
-        nv_niv.place(x=620, y=200)  # Position du bouton
+        self.nv_niv.place(x=620, y=200)  # Position du bouton  
 
         # Bouton pour rejouer à la partie précédente
-        rejouer = tk.Button(
+        self.rejouer_btn = tk.Button(  
             master,  # Fenêtre parente
             text="Rejouer",  # Titre du bouton
             font=("Arial", 14),  # Police et taille de l'écriture 
             command=lambda: niv.rejouer(self))  # Fonction appelée au clic
-        rejouer.place(x=620, y=270)  # Position du bouton
+        self.rejouer_btn.place(x=620, y=250)  # Position du bouton  
 
         # Note : les boutons "Créer un niveau" et "Fichiers niveaux" 
         # sont ajoutés dans main.py pour éviter l'importation circulaire

@@ -23,21 +23,21 @@ class FenetrePrincipale:
 
         # Paramètres de la fenêtre
         master.title("Picross")  # Titre de la fenêtre
-        master.geometry("900x800")  # Taille de la fenêtre
-        master.resizable(True, True)  # Autorise le redimensionnage de la fenêtre
+        master.geometry("850x700")  # Taille de la fenêtre
+        master.resizable(False, False)  # Autorise le redimensionnage de la fenêtre
         master.configure(bg="#FFFFFF")  # Couleur du fond
+        master.attributes('-topmost', True)  # Met la fenêtre au premier plan
 
         # Création de l'interface de jeu
         self.Interface = Interface(master)
         
-        # Bouton pour créer un nouveau niveau personnalisé
         # (Placé ici pour éviter l'importation circulaire)
         creation = tk.Button(
-            master,  # Fenêtre parente
-            text="Créer un niveau",  # Titre du bouton
-            font=("Arial", 14),  # Police et taille de l'écriture
-            command=cf.cree_nv)  # Fonction appelée au clic
-        creation.place(x=620, y=380)  # Position du bouton
+            master,
+            text="Créer un niveau",
+            font=("Arial", 14),
+            command=lambda: [master.destroy(), cf.cree_nv()])  # Ferme la fenêtre avant d'ouvrir la nouvelle
+        creation.place(x=620, y=400)
 
         # Bouton pour charger un niveau depuis un fichier
         # (Placé ici pour éviter l'importation circulaire)
@@ -45,8 +45,9 @@ class FenetrePrincipale:
             master,  # Fenêtre parente
             text="Fichiers niveaux",  # Titre du bouton
             font=("Arial", 14),  # Police et taille de l'écriture
-            command=uf.utilise_fichiers)  # Fonction appelée au clic
+            command=lambda: [master.destroy(), uf.utilise_fichiers()])  # Fonction appelée au clic
         fichiers.place(x=620, y=460)  # Position du bouton
+        
 
     def run(self):
         '''Lance la boucle principale de l'interface graphique'''

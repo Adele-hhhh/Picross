@@ -24,9 +24,10 @@ class Utilisation_fichier(Interface):
 
         # Paramètres de la fenêtre
         master.title("Picross")  # Titre de la fenêtre
-        master.geometry("900x800")  # Taille de la fenêtre
+        master.geometry("850x700")  # Taille de la fenêtre
         master.resizable(True, True)  # Autorise le redimensionnage
         master.configure(bg="#FFFFFF")  # Couleur du fond
+        master.attributes('-topmost', True)  # Fenêtre toujours au premier plan
 
         # Configuration AVANT l'appel à super().__init__
         # On définit la liste_solution et les dimensions avant d'initialiser l'interface
@@ -34,8 +35,6 @@ class Utilisation_fichier(Interface):
         self.cases = len(self.liste_solution)  # Taille de la grille chargée
         
         # Appel du constructeur de la classe parente Interface
-        # IMPORTANT : on passe master mais Interface va créer sa propre liste_solution
-        # qu'on va écraser juste après
         super().__init__(master)
         
         # Reconfiguration avec la bonne liste solution
@@ -66,7 +65,7 @@ def utilise_fichiers():
     '''
     # Ouverture de la boîte de dialogue de sélection de fichier
     file_name = filedialog.askopenfilename(
-        filetypes=[("JSON files", "*.json")],  # Filtre pour n'afficher que les .json
+        filetypes=[("JSON files", "*.json")],
         title="Sélectionner un fichier Picross"
     )
     
@@ -77,18 +76,16 @@ def utilise_fichiers():
                 liste_solution = json.load(f)
             
             # Création d'une nouvelle fenêtre pour afficher le niveau
-            nouvelle_fenetre = tk.Toplevel()
+            nouvelle_fenetre = tk.Tk()  # CHANGÉ de Toplevel() à Tk()
+            nouvelle_fenetre.attributes('-topmost', True)  # Fenêtre toujours au premier plan
             utilisation = Utilisation_fichier(nouvelle_fenetre, liste_solution)
             nouvelle_fenetre.mainloop()
             
         except FileNotFoundError:
-            # Erreur si le fichier n'existe pas
             messagebox.showerror("Erreur", f"Le fichier {file_name} n'a pas été trouvé.")
         except json.JSONDecodeError:
-            # Erreur si le fichier n'est pas un JSON valide
             messagebox.showerror("Erreur", f"Le fichier {file_name} n'est pas un fichier JSON valide.")
         except Exception as e:
-            # Erreur générique pour tout autre problème
             messagebox.showerror("Erreur", f"Une erreur est survenue : {str(e)}")
 
 
