@@ -1,6 +1,6 @@
 '''
 Picross 
-Auteurs : Matis Zhang et Adèle Havard
+Auteurs : Matis ZHANG et Adèle Havard
 Date : jsp
 Jeu dans une grille où on doit remplir ou non des cases 
 en respectant un nombre prédéfini par colonne et par ligne
