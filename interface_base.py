@@ -7,8 +7,6 @@ from tkinter import messagebox
 import NOMBRES as nb 
 import CLICS as cl 
 import Niveaux as niv
-
-
 class Interface:
     def __init__(self, master):
         '''Initialise l'interface de jeu avec tous ses éléments'''
@@ -73,6 +71,9 @@ class Interface:
 
         # Dictionnaire pour stocker l'état de chaque case
         self.etats_cases = {} 
+
+        # Liste pour stocker les labels d'indices (ajouté pour fixer le bug)
+        self.labels_indices = []
 
         # Génération de la solution de la partie
         self.liste_solution = niv.creation_liste(self)

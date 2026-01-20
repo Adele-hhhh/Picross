@@ -1,3 +1,4 @@
+# Utillisation_fichier.py
 '''
 Module d'utilisation de fichiers de niveaux pour Picross
 Permet de charger et jouer des niveaux sauvegardés au format JSON
@@ -28,14 +29,14 @@ class Utilisation_fichier(Interface):
         master.resizable(True, True)  # Autorise le redimensionnage
         master.configure(bg="#FFFFFF")  # Couleur du fond
         master.attributes('-topmost', True)  # Fenêtre toujours au premier plan
+        
         # Bouton pour charger un niveau depuis un fichier
-        fichiers = tk.Button(
-        master,  # Fenêtre parente
-        text="Fichiers niveaux",  # Titre du bouton
-        font=("Arial", 14),  # Police et taille de l'écriture
-        command=lambda: [master.destroy(), utilise_fichiers()])  # Fonction appelée au clic
-        fichiers.place(x=620, y=440)  # Position du bouton
-
+        self.fichiers = tk.Button(
+            master,  # Fenêtre parente
+            text="Fichiers niveaux",  # Titre du bouton
+            font=("Arial", 14),  # Police et taille de l'écriture
+            command=lambda: [master.destroy(), utilise_fichiers()])  # Fonction appelée au clic
+        
         # Configuration AVANT l'appel à super().__init__
         # On définit la liste_solution et les dimensions avant d'initialiser l'interface
         self.liste_solution = liste_solution
@@ -43,6 +44,17 @@ class Utilisation_fichier(Interface):
         
         # Appel du constructeur de la classe parente Interface
         super().__init__(master)
+        
+        # Retire les éléments non désirés (scale, labels, boutons nouveau et rejouer)
+        self.nb_cases_cote.place_forget()
+        self.cases_cote.place_forget()
+        self.nv_niv.place_forget()
+        self.rejouer_btn.place_forget()
+        
+        # Supprime les anciens indices pour éviter les chevauchements
+        for label in self.labels_indices:
+            label.destroy()
+        self.labels_indices.clear()
         
         # Reconfiguration avec la bonne liste solution
         self.liste_solution = liste_solution
@@ -63,6 +75,25 @@ class Utilisation_fichier(Interface):
         # Réassociation des clics (car on a recréé le canvas)
         self.canvas.bind("<Button-1>", lambda event: cl.clic_case_gauche(event, self))
         self.canvas.bind("<Button-3>", lambda event: cl.clic_case_droit(event, self))
+        
+        # Ajout du bouton Reset
+        self.reset_button = tk.Button(
+            master,
+            text="Reset",
+            font=("Arial", 14),
+            command=self.reset_grille)
+        self.reset_button.place(x=620, y=200)
+        
+        # Position du bouton Fichiers (ajustée)
+        self.fichiers.place(x=620, y=250)  # Position ajustée
+
+    def reset_grille(self):
+        '''Réinitialise la grille du joueur (sans changer la solution)'''
+        self.nb_vies = 3
+        self.label_vies.config(text=f"Vies : {self.nb_vies}")
+        self.canvas.delete("all")
+        self.etats_cases.clear()
+        self.dessiner_grille()
 
 
 def utilise_fichiers():

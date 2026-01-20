@@ -45,6 +45,7 @@ def afficher_nb_col(self):
 
     fond = tk.Label(self.master, bg="Light goldenrod",height = 5, width=71)
     fond.place(x=100, y=20)
+    self.labels_indices.append(fond)  # Ajouté pour fixer le bug
 
     for i in range(len(nb_col)): 
         texte = ""
@@ -69,6 +70,7 @@ def afficher_nb_lig(self):
 
     fond = tk.Label(self.master, bg="Light goldenrod",height = 33, width=7)
     fond.place(x=46, y=100)
+    self.labels_indices.append(fond)  # Ajouté pour fixer le bug
 
     for i in range(len(nb_lig)): 
         texte = ""
