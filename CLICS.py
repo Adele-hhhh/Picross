@@ -12,23 +12,23 @@ def verifier_victoire(self):
 
 #clic gauche : remplir une case
 def clic_case_gauche(event, self): 
-    #coordonnÃ©es de la case cliquÃ©e
+    #coordonnees de la case cliquee
     col = event.x // self.taille_case 
     lig = event.y // self.taille_case
 
     case = self.etats_cases[(col, lig)] 
     if verifier_victoire(self) == False:
         if case["etat"] == 0:   #si la case est vide 
-            if self.liste_solution[lig][col] == 1 and self.nb_vies > 0:#si c'est la bonne réponse et qu'on a encore des vies
+            if self.liste_solution[lig][col] == 1 and self.nb_vies > 0:#si c'est la bonne reponse et qu'on a encore des vies
                 self.canvas.itemconfig(case["rect"], fill="black") #on remplit la case
-                case["etat"] = 1 # on met à jour l'état de la case
+                case["etat"] = 1 # on met à jour l'etat de la case
                 if verifier_victoire(self):
                     messagebox.showinfo(None, "Vous avez gagnééééé !")
                     return
             else : 
-                if self.nb_vies >= 1: #si on a encore des vies on en enlève une
+                if self.nb_vies >= 1: #si on a encore des vies on en enleve une
                     self.nb_vies -= 1 
-                    self.label_vies.config(text=f"Vies : {self.nb_vies}") #on change le nombre affiché
+                    self.label_vies.config(text=f"Vies : {self.nb_vies}") #on change le nombre affiche
                     if self.nb_vies == 0:  # si on a plus de vies on perd
                         messagebox.showinfo(None, "Vous avez perdu")
 
@@ -39,8 +39,8 @@ def clic_case_droit(event, self):
 
     case = self.etats_cases[(col, lig)]
     if verifier_victoire(self) == False:
-        if case["etat"] == 0:  # Si la case est déjà remplie on met rien
-            if self.liste_solution[lig][col] == 0 and self.nb_vies > 0 :#si c'est la bonne réponse et qu'on a encore des vies
+        if case["etat"] == 0:  # Si la case est deja remplie on met rien
+            if self.liste_solution[lig][col] == 0 and self.nb_vies > 0 :#si c'est la bonne reponse et qu'on a encore des vies
                 #on dessine une croix dans la case :
                 x1 = col * self.taille_case
                 y1 = lig * self.taille_case
@@ -55,8 +55,9 @@ def clic_case_droit(event, self):
                     messagebox.showinfo(None, "Vous avez gagnééééé !")
                     return
             else : 
-                if self.nb_vies >= 1 : #si on a encore des vies on en enlève une
+                if self.nb_vies >= 1 : #si on a encore des vies on en enleve une
                     self.nb_vies -= 1 
-                    self.label_vies.config(text=f"Vies : {self.nb_vies}") #on change le nombre affiché
+                    self.label_vies.config(text=f"Vies : {self.nb_vies}") #on change le nombre affiche
                     if self.nb_vies == 0 :  #si on a plus de vies on perd
+
                         messagebox.showinfo(None, "Vous avez perdu")
