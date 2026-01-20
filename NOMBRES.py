@@ -46,7 +46,7 @@ def afficher_nb_col(self):
     fond.place(x=100, y=20)
     for i in range(len(nb_col)): 
         texte = ""
-        for nombre in nombre_colonne(self.liste_solution)[i]:
+        for nombre in nb_col[i]:
             if texte == "":
                 texte = str(nombre)
             else:
@@ -65,7 +65,7 @@ def afficher_nb_lig(self):
     fond.place(x=46, y=100)
     for i in range(len(nb_lig)): 
         texte = ""
-        for nombre in nombre_ligne(self.liste_solution)[i]:
+        for nombre in nb_lig[i]:
             if texte == "":
                 texte = str(nombre)
             else:
