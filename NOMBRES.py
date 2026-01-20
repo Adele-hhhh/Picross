@@ -42,8 +42,10 @@ def nombre_ligne(liste_solution) :
 
 def afficher_nb_col(self):
     nb_col = nombre_colonne(self.liste_solution)
+
     fond = tk.Label(self.master, bg="Light goldenrod",height = 5, width=71)
     fond.place(x=100, y=20)
+
     for i in range(len(nb_col)): 
         texte = ""
         for nombre in nb_col[i]:
@@ -58,11 +60,14 @@ def afficher_nb_col(self):
                 font=("Arial", 9))
         x = 100 + i * self.taille_case + self.taille_case//2
         label.place(x=x, y=60, anchor="center")
+        self.labels_indices.append(label)
 
 def afficher_nb_lig(self):
     nb_lig = nombre_ligne(self.liste_solution)
+
     fond = tk.Label(self.master, bg="Light goldenrod",height = 33, width=7)
     fond.place(x=46, y=100)
+
     for i in range(len(nb_lig)): 
         texte = ""
         for nombre in nb_lig[i]:
@@ -77,3 +82,4 @@ def afficher_nb_lig(self):
                 font=("Arial", 9))
         y = 100 + i * self.taille_case + self.taille_case//2
         label.place(x=73, y=y, anchor="center")
+        self.labels_indices.append(label)
