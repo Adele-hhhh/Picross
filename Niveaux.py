@@ -33,6 +33,8 @@ def rejouer(self):
     # Réaffichage des indices
     nb.afficher_nb_col(self)
     nb.afficher_nb_lig(self)
+
+
 def nouveau_niveau(self):
     self.cases = self.nb_cases_cote.get()#on récupère le nombre de cases par côté dans le scale
     self.taille_case = 500 // self.cases    #calcule la taille d'une case
@@ -47,6 +49,7 @@ def nouveau_niveau(self):
     # Nettoyage du canvas
     self.canvas.delete("all") #enlève la grille qu'il y avait avant
     self.etats_cases.clear() #toutes les cases sont remises à 0
+    
     # Supprime les anciens indices
     for label in self.labels_indices:
         label.destroy()
@@ -58,5 +61,6 @@ def nouveau_niveau(self):
     # Réaffichage des indices
     nb.afficher_nb_col(self)
     nb.afficher_nb_lig(self)
+
 
 
