@@ -53,14 +53,14 @@ def nouveau_niveau(self):
     # Supprime les anciens indices
     for label in self.labels_indices:
         label.destroy()
-    self.labels_indices.clear()
-    cf.actualiser_indices(self) #enlève les anciens indices et met les nouveaux  
+    self.labels_indices.clear() 
     
     # Redessin
     self.dessiner_grille()    #remet une grille avec le nombre de cases demandé
     # Réaffichage des indices
     nb.afficher_nb_col(self)
     nb.afficher_nb_lig(self)
+
 
 
 
