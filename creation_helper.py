@@ -27,8 +27,8 @@ def actualiser_indices(self):
 
 def afficher_nb_col_creation(self):
     '''
-    Affiche les indices des colonnes au-dessus de la grille
-    lors de la création d’un niveau.
+    Affiche les indices des colonnes au-dessus de la grille lors de la création d’un niveau, 
+    même fonction que dans le fichier nombres mais remise pour simplifier
     '''
     # Calcul des indices de colonnes à partir de la solution
     nb_col = nb.nombre_colonne(self.liste_solution)
@@ -70,8 +70,8 @@ def afficher_nb_col_creation(self):
 
 def afficher_nb_lig_creation(self):
     '''
-    Affiche les indices des lignes à gauche de la grille
-    lors de la création d’un niveau.
+    Affiche les indices des lignes à gauche de la grille lors de la création d’un niveau, 
+    même fonction que dans le fichier nombres mais remise pour simplifier
     '''
     # Calcul des indices de lignes à partir de la solution
     nb_lig = nb.nombre_ligne(self.liste_solution)
